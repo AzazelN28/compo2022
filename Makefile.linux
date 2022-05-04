@@ -1,0 +1,2 @@
+all:
+	gcc src/linux/main.c src/point.c src/rect.c -o dist/linux -lm

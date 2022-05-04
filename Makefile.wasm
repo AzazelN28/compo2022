@@ -1,0 +1,16 @@
+wasm:
+	clang-12 \
+		--target=wasm32 \
+		-emit-llvm \
+		-c \
+		-S \
+		src/i_wasm.c
+	llc-12 \
+		-march=wasm32 \
+		-filetype=obj \
+		i_wasm.ll
+	wasm-ld-12 \
+		--no-entry \
+		--export-all \
+		-o i_wasm.wasm \
+		i_wasm.o

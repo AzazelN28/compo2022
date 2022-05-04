@@ -1,0 +1,2 @@
+all:
+	gcc src/dos/main.c src/dos/mouse.c src/dos/keyboard.c src/point.c src/rect.c -o dist/dos.exe -lm
