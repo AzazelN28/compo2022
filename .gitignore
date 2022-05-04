@@ -341,3 +341,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,osx,windows,vim,emacs,sublimetext,visualstudiocode,node
 
+*.EXE
+*.exe
+*.O
+*.o
+*.wasm
