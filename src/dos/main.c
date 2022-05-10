@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
   mouse_reset(&mouse);
   mouse_show(&mouse);
 
-  // video_init();
+  video_init();
 
   bool is_running = true;
   while (is_running)
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
       video_palette_update(palette);
     }
 
-    // video_framebuffer_update(framebuffer);
+    video_framebuffer_update(framebuffer);
 
     printf("%d %c %d\r", keyboard.key_code, keyboard.key_char, keyboard.status);
 
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
     }
   }
 
-  // video_terminate();
+  video_terminate();
 
   mouse_hide(&mouse);
 
