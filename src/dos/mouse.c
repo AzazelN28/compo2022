@@ -1,11 +1,12 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <dos.h>
+#include <dpmi.h>
 #include <assert.h>
 #include "mouse.h"
 
 void mouse_reset(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   MOUSE_COMMAND(reg, MOUSE_RESET)
@@ -17,7 +18,7 @@ void mouse_reset(mouse_t* mouse) {
 }
 
 void mouse_show(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   MOUSE_COMMAND(reg, MOUSE_SHOW)
@@ -26,7 +27,7 @@ void mouse_show(mouse_t* mouse) {
 }
 
 void mouse_hide(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   MOUSE_COMMAND(reg, MOUSE_HIDE)
@@ -35,7 +36,7 @@ void mouse_hide(mouse_t* mouse) {
 }
 
 void mouse_get_position(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   MOUSE_COMMAND(reg, MOUSE_GET_POS)
@@ -46,7 +47,7 @@ void mouse_get_position(mouse_t* mouse) {
 }
 
 void mouse_set_position(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   reg.x.cx = mouse->x;
@@ -55,7 +56,7 @@ void mouse_set_position(mouse_t* mouse) {
 }
 
 void mouse_get_press(mouse_t* mouse, u1 button) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   reg.x.bx = button;
@@ -69,7 +70,7 @@ void mouse_get_press(mouse_t* mouse, u1 button) {
 }
 
 void mouse_get_release(mouse_t* mouse, u1 button) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   reg.x.bx = button;
@@ -81,7 +82,7 @@ void mouse_get_release(mouse_t* mouse, u1 button) {
 }
 
 void mouse_set_range_x(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   reg.x.cx = mouse->range_x.min;
@@ -90,7 +91,7 @@ void mouse_set_range_x(mouse_t* mouse) {
 }
 
 void mouse_set_range_y(mouse_t* mouse) {
-  union REGS reg;
+  __dpmi_regs reg;
   assert(mouse != NULL);
 
   reg.x.cx = mouse->range_y.min;

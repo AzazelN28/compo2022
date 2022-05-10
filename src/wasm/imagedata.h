@@ -1,0 +1,2 @@
+#define IMAGEDATA_SIZE 320 * 200 * 4
+

@@ -21,8 +21,7 @@ rect_t* rect_set(rect_t* o, s2 x, s2 y, s2 width, s2 height)
 
 bool rect_contains_point(const rect_t* r, const point_t* p)
 {
-  assert(r != NULL);
-  assert(p != NULL);
+  assert(r != NULL && p != NULL);
   return p->x > r->x
       && p->x < r->x + r->width
       && p->y > r->y
@@ -31,8 +30,7 @@ bool rect_contains_point(const rect_t* r, const point_t* p)
 
 bool rect_contains_rect(const rect_t* a, const rect_t* b)
 {
-  assert(a != NULL);
-  assert(b != NULL);
+  assert(a != NULL && b != NULL);
   if (a->x + a->width < b->x || a->x > b->x + b->width) {
     return false;
   }
@@ -44,5 +42,5 @@ bool rect_contains_rect(const rect_t* a, const rect_t* b)
 
 bool rect_intersects_rect(const rect_t* a, const rect_t* b)
 {
-
+  assert(a != NULL && b != NULL);
 }

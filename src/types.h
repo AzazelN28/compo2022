@@ -1,3 +1,5 @@
+
+// Tipos básicos, me cansa escribir `unsigned char`.
 typedef unsigned char u1;
 typedef signed char s1;
 

@@ -22,7 +22,7 @@
 #define MOUSE_INT 0x33
 #define MOUSE_COMMAND(reg, command) \
   reg.x.ax = command;               \
-  int86(MOUSE_INT, &reg, &reg);
+  __dpmi_int(MOUSE_INT, &reg);
 
 typedef struct mouse_
 {

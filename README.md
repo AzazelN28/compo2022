@@ -1,15 +1,39 @@
 # Compo 2022
 
-## ¿Qué necesito?
+## MS-DOS
 
-- [ ] Definir toda la implementación de DOS para:
-  - [ ] Leer teclado
-  - [ ] Leer ratón
-  - [ ] Escribir pantalla
-  - [ ] Reproducir sonido (con la sound blaster a ser posible)
+Para compilarlo para DOS necesitarás tener instalado [DJGPP] en tu equipo y una máquina virtual
+de DOS con [DOSBox] o [DOSBox-X].
 
-## SoundBlaster, SoundBlaster Pro, SoundBlaster 16
+Desde la máquina DOS ejecuta:
 
-Tiene pinta de que programar las rutinas de audio va a ser de las
-cosas MÁS JODIDAS que hay.
+```sh
+make -f MAKEFILE.DOS
+```
 
+## Linux
+
+Para compilarlo para Linux sólo tienes que llamar a:
+
+```sh
+make -f Makefile.linux
+```
+
+Necesitarás tener las librerías SDL2 instaladas, si utilizas Debian o un derivado (como Ubuntu),
+puedes usar:
+
+```sh
+sudo apt-get install libsdl2-dev
+```
+
+## WebAssembly
+
+Todavía estoy trabajando para tener una versión decente que funcione en WebAssembly pero
+en principio bastaría con ejecutar (necesitarás tener instalado clang, llvm y lld):
+
+```sh
+make -f Makefile.wasm
+```
+
+> :bulb: Si no te compila comprueba que tengas al menos clang 12 y que esté disponible como 
+> clang-12. Si no fuera el caso, siempre puedes reemplazarlo por `clang`.

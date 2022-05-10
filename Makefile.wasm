@@ -1,3 +1,6 @@
+#
+# Esto de momento no utiliza Emscripten y sinceramente si puedo evitarlo, lo haré.
+#
 wasm:
 	clang-12 \
 		--target=wasm32 \
