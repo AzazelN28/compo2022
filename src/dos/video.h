@@ -4,8 +4,9 @@
 // #define VIDEO_USE_FARPOKE
 #define VIDEO_USE_DISABLE_PROTECTION
 
-#define VIDEO_WIDTH             320
-#define VIDEO_HEIGHT            200
+#define VIDEO_WIDTH           320
+#define VIDEO_HEIGHT          200
+#define VIDEO_SIZE            64000
 
 #define VIDEO_INT             0x10
 

@@ -7,13 +7,21 @@ wasm:
 		-emit-llvm \
 		-c \
 		-S \
-		src/i_wasm.c
+		src/wasm/imagedata.c \
+		src/div.c \
+		src/palette.c \
+		src/framebuf.c \
+		src/interpol.c \
+		src/point.c \
+		src/rect.c \
+		src/game.c \
+		src/actor.c
 	llc-12 \
 		-march=wasm32 \
 		-filetype=obj \
-		i_wasm.ll
+		wasm.ll
 	wasm-ld-12 \
 		--no-entry \
 		--export-all \
-		-o i_wasm.wasm \
-		i_wasm.o
+		-o wasm.wasm \
+		wasm.o

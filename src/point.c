@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <math.h>
 #include <assert.h>
+
 #include "types.h"
 #include "point.h"
 #include "interpol.h"

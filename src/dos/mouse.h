@@ -1,4 +1,5 @@
 #include <stdbool.h>
+
 #include "../types.h"
 #include "../range.h"
 #include "../point.h"

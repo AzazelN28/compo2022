@@ -32,30 +32,38 @@ void video_init()
 
 void video_palette_update(const u1* palette)
 {
-  outp(0x3C8, 0);
+  outportb(0x3C8, 0);
   for (u2 i = 0; i < VIDEO_PALETTE_SIZE; i++)
   {
-    outp(0x3C9, palette[i]);
+    outportb(0x3C9, palette[i]);
   }
 }
 
 void video_framebuffer_update(const u1* framebuffer) {
   #ifdef VIDEO_USE_DOSMEMPUT
-    dosmemput(framebuffer, VIDEO_WIDTH * VIDEO_HEIGHT, VIDEO_BASE_ADDRESS);
+    dosmemput(framebuffer, VIDEO_SIZE, VIDEO_BASE_ADDRESS);
   #endif
 
   #ifdef VIDEO_USE_FARPOKEB
     _farsetsel(_dos_ds);
-    for (u2 i = 0; i < VIDEO_WIDTH * VIDEO_HEIGHT; i++)
+    for (u2 i = 0; i < VIDEO_SIZE; i++)
     {
       _farnspokeb(VIDEO_BASE_ADDRESS + i, framebuffer[i]);
     }
   #endif
 
+  #ifdef VIDEO_USE_FARPOKEL
+    _farsetsel(_dos_ds);
+    for (u2 i = 0; i < VIDEO_SIZE; i += 4)
+    {
+      _farnspokel(VIDEO_BASE_ADDRESS + i, framebuffer[i]);
+    }
+#endif
+
   #ifdef VIDEO_USE_DISABLE_PROTECTION
     if (__djgpp_nearptr_enable()) {
-      u1 *screen = (u1 *)(__djgpp_conventional_base + 0xA0000);
-      memcpy(screen, framebuffer, VIDEO_WIDTH * VIDEO_HEIGHT);
+      u1 *screen = (u1 *)(__djgpp_conventional_base + VIDEO_BASE_ADDRESS);
+      memcpy(screen, framebuffer, VIDEO_SIZE);
       __djgpp_nearptr_disable();
     }
   #endif
@@ -63,8 +71,8 @@ void video_framebuffer_update(const u1* framebuffer) {
 
 void video_wait_retrace()
 {
-  while (inp(VIDEO_INPUT_STATUS) & VIDEO_VERTICAL_RETRACE_BIT);
-  while (!(inp(VIDEO_INPUT_STATUS) & VIDEO_VERTICAL_RETRACE_BIT));
+  while (inportb(VIDEO_INPUT_STATUS) & VIDEO_VERTICAL_RETRACE_BIT);
+  while (!(inportb(VIDEO_INPUT_STATUS) & VIDEO_VERTICAL_RETRACE_BIT));
 }
 
 void video_terminate()

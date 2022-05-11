@@ -1,2 +1,12 @@
 all:
-	gcc src/linux/main.c src/linux/surface.c src/linux/div.c src/palette.c src/framebuf.c src/interpol.c src/point.c src/rect.c src/game.c src/actor.c -o dist/linux -lm `pkg-config --cflags --libs sdl2`
+	gcc src/linux/main.c \
+		src/linux/surface.c \
+		src/div.c \
+		src/palette.c \
+		src/framebuf.c \
+		src/interpol.c \
+		src/point.c \
+		src/rect.c \
+		src/game.c \
+		src/actor.c \
+		-o dist/linux -lm `pkg-config --cflags --libs sdl2`

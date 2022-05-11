@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "mouse.h"
 #include "keyboard.h"
 #include "video.h"
@@ -45,31 +46,34 @@ int main(int argc, char** argv) {
 
   mouse_reset(&mouse);
   mouse_show(&mouse);
+
   mouse.position.x = VIDEO_WIDTH >> 1;
   mouse.position.y = VIDEO_HEIGHT >> 1;
   mouse_set_position(&mouse);
 
   video_init();
 
-  u1 frames_buffer[32];
-  u4 frames = 0;
+  f4 ms = 0;
 
   bool is_running = true;
-  while (is_running && frames < 1000)
+  while (is_running)
   {
     // FIXME: esto no funciona bien, se queda esperando
     // que presiones la tecla.
     keyboard_update(&keyboard);
     mouse_get_position(&mouse);
 
-    // Actualizamos el código del juego.
-    game_loop();
-
     map_draw(framebuffer, &map, 0, 0);
-    fpg_draw(framebuffer, &fpg, 100, mouse.position.x, mouse.position.y);
 
-    snprintf(frames_buffer, 32, "%d\n", frames);
-    fnt_write(framebuffer, &fnt, frames_buffer, 20, 20);
+    // Actualizamos el código del juego.
+    ms = 1000.0 * (float)clock() / (float)CLOCKS_PER_SEC;
+    game_loop(ms);
+
+    // Pintamos en pantalla el número de updates que
+    // han ocurrido.
+    u1 updates_buffer[32];
+    snprintf(updates_buffer, 32, "%d %02f\n", game_time.updates, game_time.time);
+    fnt_write(framebuffer, &fnt, updates_buffer, 0, 0);
 
     // Actualizamos la pantalla.
     if (palette_needs_update())
@@ -85,12 +89,8 @@ int main(int argc, char** argv) {
       is_running = false;
       break;
     }
-    frames++;
   }
-
   video_terminate();
-
   mouse_hide(&mouse);
-
   return 0;
 }

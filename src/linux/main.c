@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     goto quit;
   }
 
-  float framebuffer_scale = 4;
+  f4 framebuffer_scale = 4;
 
   SDL_Window *window = SDL_CreateWindow(
       "Compo 2022",
@@ -50,12 +50,12 @@ int main(int argc, char **argv)
     goto quit;
   }
 
-  SDL_Surface *surface = SDL_CreateRGBSurface(
+  SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormat(
     0,
     FRAMEBUFFER_WIDTH,
     FRAMEBUFFER_HEIGHT,
     32,
-    0, 0, 0, 0
+    SDL_PIXELFORMAT_RGBA8888
   );
   if (surface == NULL)
   {
@@ -91,6 +91,8 @@ int main(int argc, char **argv)
 
   SDL_Event event;
 
+  f4 ms = 0;
+
   bool is_running = true;
   while (is_running)
   {
@@ -119,9 +121,19 @@ int main(int argc, char **argv)
       }
     }
 
+    map_draw(framebuffer, &map, 0, 0);
+
+    ms = (float)SDL_GetTicks();
+
     // Aquí deberíamos actualizar el comportamiento
     // del juego.
-    game_loop();
+    game_loop(ms);
+
+    // Pintamos en pantalla el número de updates que
+    // han ocurrido.
+    u1 updates_buffer[32];
+    snprintf(updates_buffer, 32, "%d %d\n", game_time.updates, (u4)game_time.time);
+    fnt_write(framebuffer, &fnt, updates_buffer, 0, 0);
 
     // Aquí deberíamos actualizar el imagedata a partir
     // del framebuffer de 8 bits.

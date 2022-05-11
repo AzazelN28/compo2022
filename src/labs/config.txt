@@ -1,0 +1,8 @@
+# Configurasión
+width = 1280
+height = 720
+test = 
+
+asdad
+asd
+

@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../range.h"
-#include "../div.h"
-#include "../types.h"
-#include "../palette.h"
-#include "../framebuf.h"
-#include "../buffer.h"
+#include "range.h"
+#include "div.h"
+#include "types.h"
+#include "palette.h"
+#include "framebuf.h"
+#include "buffer.h"
 
 void palette_printf(palette_t *palette)
 {

@@ -9,5 +9,9 @@ typedef signed short s2;
 typedef unsigned int u4;
 typedef signed int s4;
 
+// Necesario para SDL2 y SDL_GetTicks64.
+typedef unsigned long long u8;
+typedef signed long long s8;
+
 typedef float f4;
 typedef double f8;
