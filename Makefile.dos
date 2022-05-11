@@ -1,2 +1,2 @@
 all:
-	gcc src/dos/main.c src/dos/div.c src/dos/video.c src/dos/mouse.c src/dos/keyboard.c src/point.c src/rect.c src/interpol.c src/palette.c -o dist/dos.exe -lm
+	gcc src/dos/main.c src/dos/div.c src/dos/video.c src/dos/mouse.c src/dos/keyboard.c src/point.c src/rect.c src/interpol.c src/palette.c src/framebuf.c src/game.c src/actor.c -o dist/dos.exe -lm

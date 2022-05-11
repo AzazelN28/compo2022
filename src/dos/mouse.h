@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include "../types.h"
 #include "../range.h"
+#include "../point.h"
 
 #define MOUSE_EXISTS_NO 0x0000
 #define MOUSE_EXISTS_YES 0xFFFF
@@ -31,8 +32,7 @@ typedef struct mouse_
   u2 num_buttons;
   u2 buttons;
   u2 counter;
-  u2 x;
-  u2 y;
+  point_t position;
   range_t range_x;
   range_t range_y;
 } mouse_t;

@@ -1,5 +1,8 @@
+#include <stddef.h>
+
 #include "types.h"
 #include "game.h"
+#include "actor.h"
 
 void game_input()
 {
@@ -9,12 +12,48 @@ void game_input()
 
 void game_update()
 {
-  // TODO: Aquí deberíamos actualizar el comportamiento
-  // de las entidades.
+  actor_t* actors = NULL;
+
+  if (actors != NULL)
+  {
+    // TODO: Aquí deberíamos actualizar el comportamiento
+    // de las entidades.
+    for (actor_t *actor = actors; actor != NULL; actor = actor->next)
+    {
+      // TODO: Aquí deberíamos actualizar el comportamiento de los
+      // actores.
+    }
+  }
+}
+
+void game_audio()
+{
+  // TODO: Actualizar el audio del juego.
+}
+
+void game_render()
+{
+  actor_t *actors = NULL;
+
+  if (actors != NULL)
+  {
+    for (actor_t *actor = actors; actor != NULL; actor = actor->next)
+    {
+      // TODO: Aquí deberíamos actualizar el comportamiento de los
+      // actores.
+    }
+  }
 }
 
 void game_output()
 {
-  // TODO: Aquí deberíamos actualizar la salida del audio
-  // y del vídeo.
+  // game_audio();
+  game_render();
+}
+
+void game_loop()
+{
+  game_input();
+  game_update();
+  game_output();
 }
