@@ -1,1 +1,1 @@
-#define OFFSET(x, y, width) y * width + x
+#define OFFSET(x, y, width) (y * width + x)

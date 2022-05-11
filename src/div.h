@@ -152,10 +152,16 @@ void pal_palette_apply(u1* palette, pal_t* pal);
 
 void map_load_from_file(const char *filename, map_t *map);
 void map_unload(map_t *map);
-void map_draw(u1* framebuffer, map_t* map, u2 x, u2 y);
+void map_draw(u1* framebuffer, map_t* map, s2 x, s2 y);
 void map_palette_apply(u1* palette, map_t* map);
 
 void fpg_load_from_file(const char *filename, fpg_t *fpg);
 void fpg_unload(fpg_t *fpg);
+void fpg_printf(fpg_t *fpg);
+void fpg_draw(u1* framebuffer, fpg_t* fpg, u4 code, s2 x, s2 y);
+
 void fnt_load_from_file(const char *filename, fnt_t *fnt);
 void fnt_unload(fnt_t *fnt);
+s2 fnt_compute_width(fnt_t *fnt, const char* text);
+void fnt_write(u1 *framebuffer, fnt_t* fnt, const char* text, s2 x, s2 y);
+void fnt_write_aligned(u1 *framebuffer, fnt_t* fnt, const char* text, s2 x, s2 y, u1 code);

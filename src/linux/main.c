@@ -3,11 +3,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "surface.h"
+
 #include "../types.h"
 #include "../framebuf.h"
 #include "../palette.h"
 #include "../game.h"
 #include "../div.h"
+#include "../buffer.h"
 
 /**
  * @brief Este es el main de Linux.
@@ -82,7 +85,12 @@ int main(int argc, char **argv)
   map_draw(framebuffer, &map, 0, 0);
 
   fpg_load_from_file("dist/test.fpg", &fpg);
-  fnt_load_from_file("dist/test.fnt", &fnt);
+
+  fnt_load_from_file("dist/nuevofnt.fnt", &fnt);
+  fnt_write(framebuffer, &fnt, "Hola, Mundo!", 100, 100);
+
+  fpg_printf(&fpg);
+  fpg_draw(framebuffer, &fpg, 100, 0, 0);
 
   SDL_Event event;
 
@@ -117,28 +125,9 @@ int main(int argc, char **argv)
     // Aquí deberíamos actualizar el imagedata a partir
     // del framebuffer de 8 bits.
     SDL_LockSurface(surface);
-
-    // Actualizamos la superficie con la información que tenemos en el framebuffer.
-    // FIXME: Me suena que todo esto lo podría hacer directamente con funciones
-    // de SDL y utilizando paletas de SDL (SDL_Palette) pero todavía no lo tengo muy
-    // claro.
-    u1 *pixels = (u1*)surface->pixels;
-    for (u2 y = 0; y < FRAMEBUFFER_HEIGHT; y++)
-    {
-      for (u2 x = 0; x < FRAMEBUFFER_WIDTH; x++)
-      {
-        u4 offset_to = (y * FRAMEBUFFER_WIDTH + x) * 4;
-        u4 offset_from = y * FRAMEBUFFER_WIDTH + x;
-        u1 color = framebuffer[offset_from];
-        u2 index = color * 3;
-
-        pixels[offset_to + 0] = palette[index + 0];
-        pixels[offset_to + 1] = palette[index + 1];
-        pixels[offset_to + 2] = palette[index + 2];
-        pixels[offset_to + 3] = 0xFF;
-      }
-    }
+    surface_render(surface, framebuffer, palette);
     SDL_UnlockSurface(surface);
+
     SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
 
     // Presentamos la mandanga.
