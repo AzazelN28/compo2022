@@ -55,10 +55,7 @@ int main(int argc, char **argv)
     FRAMEBUFFER_WIDTH,
     FRAMEBUFFER_HEIGHT,
     32,
-    0xff000000,
-    0x00ff0000,
-    0x0000ff00,
-    0x000000ff
+    0, 0, 0, 0
   );
   if (surface == NULL)
   {
@@ -105,6 +102,10 @@ int main(int argc, char **argv)
       case SDL_MOUSEBUTTONDOWN:
       case SDL_MOUSEBUTTONUP:
       case SDL_MOUSEMOTION:
+        // event.motion.x;
+        // event.motion.y;
+        break;
+
       case SDL_MOUSEWHEEL:
         break;
 
