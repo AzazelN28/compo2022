@@ -6,9 +6,11 @@
 #include "video.h"
 
 #include "../types.h"
-#include "../palette.h"
 #include "../framebuf.h"
+#include "../palette.h"
 #include "../game.h"
+#include "../div.h"
+#include "../buffer.h"
 
 /**
  * @brief Este es el main de DOS.
@@ -20,18 +22,26 @@
 int main(int argc, char** argv) {
   mouse_t mouse;
   keyboard_t keyboard;
-  
-  bool is_palette_dirty = true;
-  u1 palette[PALETTE_SIZE];
-  u1 framebuffer[FRAMEBUFFER_SIZE];
 
-  memset(palette, PALETTE_SIZE, 0);
-  memset(framebuffer, FRAMEBUFFER_SIZE, 0);
+  pal_t pal;
+  map_t map;
+  fpg_t fpg;
+  fnt_t fnt;
 
-  // Creamos una paleta en blanco y negro.
-  for (u2 i = 0; i < 256; i++) {
-    palette_set_color(palette, i, i, i, i);
-  }
+  pal_load_from_file("dist/test.pal", &pal);
+  pal_palette_apply(palette, &pal);
+
+  map_load_from_file("dist/test.map", &map);
+  map_palette_apply(palette, &map);
+  map_draw(framebuffer, &map, 0, 0);
+
+  fpg_load_from_file("dist/test.fpg", &fpg);
+
+  fnt_load_from_file("dist/nuevofnt.fnt", &fnt);
+  fnt_write(framebuffer, &fnt, "Hola, Mundo!", 100, 100);
+
+  fpg_printf(&fpg);
+  fpg_draw(framebuffer, &fpg, 100, 0, 0);
 
   printf("Hello, DOS!\n");
 
@@ -43,28 +53,25 @@ int main(int argc, char** argv) {
   bool is_running = true;
   while (is_running)
   {
+    // FIXME: esto no funciona bien, se queda esperando
+    // que presiones la tecla.
     keyboard_update(&keyboard);
     mouse_get_position(&mouse);
-
-    framebuffer_set_pixel(
-      framebuffer,
-      mouse.position.x,
-      mouse.position.y,
-      255
-    );
 
     // Actualizamos el código del juego.
     game_loop();
 
     // Actualizamos la pantalla.
-    if (is_palette_dirty)
+    if (palette_needs_update())
     {
       video_palette_update(palette);
     }
     video_framebuffer_update(framebuffer);
+    video_wait_retrace();
 
     // Si se presiona la tecla Escape, salimos del juego.
-    if (keyboard.key_code == K_ESCAPE) {
+    if (keyboard.key_code == K_ESCAPE)
+    {
       is_running = false;
       break;
     }

@@ -144,6 +144,10 @@ typedef struct
   fnt_header_t header;
   palette_t palette;
   u4 charset;
+  u4 space;
+  u4 avg_width;
+  u4 max_width;
+  u4 max_height;
   fnt_glyph_t glyphs[FNT_NUM_GLYPHS];
 } fnt_t;
 

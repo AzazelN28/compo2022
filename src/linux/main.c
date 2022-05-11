@@ -128,6 +128,7 @@ int main(int argc, char **argv)
     surface_render(surface, framebuffer, palette);
     SDL_UnlockSurface(surface);
 
+    // Actualizamos la texture de la superficie.
     SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
 
     // Presentamos la mandanga.
